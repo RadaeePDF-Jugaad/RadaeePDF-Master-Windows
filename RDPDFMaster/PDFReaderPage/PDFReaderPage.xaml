@@ -1,0 +1,314 @@
+﻿<Page
+    x:Class="RDPDFReader.PDFReaderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RDPDFReader"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:module="using:RDPDFMaster.Modules.FTS"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <DataTemplate x:Key="FTSSearchResultItemTemplate" x:DataType="module:FTS">
+            <RelativePanel Width="350" Margin="0,5,0,5">
+                <TextBlock MaxLines="2" TextWrapping="Wrap" RelativePanel.AlignLeftWithPanel="True" Margin="0,0,25,0"
+                           RelativePanel.AlignRightWith="PageIndex" module:TextBlockHelper.FormattedText="{x:Bind Snippet}"/>
+                <TextBlock x:Name="PageIndex" Text="{x:Bind PageNumber}" RelativePanel.AlignRightWithPanel="True"/>
+            </RelativePanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <SplitView IsPaneOpen="false" DisplayMode="Overlay" PanePlacement="Right" x:Name="splitView" OpenPaneLength="400" PaneBackground="#E6F2F2F2" >
+
+        <RelativePanel Name="mRoot">
+            <RelativePanel Name="mView" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
+            </RelativePanel>
+            <CommandBar x:Name="mNormalCommandBar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" HorizontalAlignment="Stretch" SizeChanged="mCommandBar_SizeChanged">
+                <CommandBar.Content>
+                    <TextBlock Text="{x:Bind mFileName}" Margin="12,14"/>
+                </CommandBar.Content>
+                <AppBarSeparator/>
+                <AppBarButton x:Name="mBack" Icon="Back" Click="mBack_Click" />
+                <AppBarButton x:Name="mVMode" Click="mVMode_Click" Label="View Mode" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/icon_view_mode.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout x:Name="mViewModeFlyout" Placement="Bottom">
+                            <MenuFlyoutItem Tag="0" Text="Vertical" Click="mViewMode_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_view_vert.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="2" Text="Horizon" Click="mViewMode_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_view_horz.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="3" Text="Dual Page" Click="mViewMode_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_view_dual_page.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="4" Text="Dual Page With Cover" Click="mViewMode_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_view_horz_cover.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="6" Text="Horizontal Dual Page" Click="mViewMode_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_horz_dual_page.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <!--<MenuFlyoutItem Tag="5" Text="Single Page" Click="mViewMode_Click">
+                            <MenuFlyoutItem.Icon>
+                                <BitmapIcon UriSource="/Assets/imgs/icon_single_page.png" Margin="-10"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>-->
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                </AppBarButton>
+
+                <AppBarButton x:Name="mTool" Click="mTool_Click" Label="Tools" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/icon_menu.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout x:Name="mToolsFlyout" Placement="Bottom">
+                            <MenuFlyoutItem Tag="0" Text="Undo" Click="mTools_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_undo.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="1" Text="Redo" Click="mTools_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_redo.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="2" Text="Search" Click="mTools_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/view_search.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="3" Text="Text Selection" Click="mTools_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/annot_text.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="4" Text="Meta" Click="mTools_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_meta.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="5" Text="Outline" Click="mTools_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_menu.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                </AppBarButton>
+
+                <AppBarButton x:Name="mAnnot" Click="mAnnot_Click" Label="Annotations" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/annot_rect_text.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout x:Name="mAnnotFlyout" Placement="Bottom">
+                            <MenuFlyoutItem Tag="0" Text="Ink" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/annot_line.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="1" Text="Note" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/annot_rect_text.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="2" Text="Line" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_select.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="3" Text="Rectangle" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/annot_rect.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="4" Text="Ellipse" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/annot_ellipse.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="5" Text="Stamp" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_stamp.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="6" Text="Editbox" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_edit_box.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="7" Text="Polygon" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_polygon.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="8" Text="Polyline" Click="mAnnotButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_polyline.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                </AppBarButton>
+
+                <AppBarButton x:Name="mField" Click="mField_Click" Label="Fields" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/icon_edit_box_field.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout x:Name="mFieldFlyout" Placement="Bottom">
+                            <MenuFlyoutItem Tag="20" Text="Check box" Click="mFieldButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_check_box.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="21" Text="Radio box" Click="mFieldButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_radio_button.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="22" Text="Signature" Click="mFieldButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_sign.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Tag="23" Text="Editbox" Click="mFieldButton_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <BitmapIcon UriSource="/Assets/imgs/icon_edit_box_field.png" Margin="-10"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                </AppBarButton>
+
+                <AppBarButton x:Name="mEditText" Click="mEditText_Click" Label="Edit Text" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/icon_edit_text.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Name="mEditPage" Click="mEditPage_Click" Label="Edit Page" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/icon_manage_pages.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Name="mAttachmentBtn" Click="mAttachmentBtn_Click" Label="Attachments" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/icon_attachment.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <local:AppBarEmpty x:Name="mNormalEmpty" Width="100px"/>
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Label="About..." Click="AboutButton_Click"/>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
+            <CommandBar x:Name="mAnnotCommandBar" Visibility="Collapsed" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" HorizontalAlignment="Stretch" SizeChanged="mCommandBar_SizeChanged">
+                <CommandBar.Content>
+                    <TextBlock Text="{x:Bind mFileName}" Margin="12,14"/>
+                </CommandBar.Content>
+                <AppBarSeparator/>
+                <AppBarButton x:Name="mCancel" Click="mCancel_Click" Label="Cancel" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/annot_remove.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Name="mOk" Click="mOk_Click" Label="Done" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="/Assets/imgs/annot_done.png" Margin="-10"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <local:AppBarEmpty x:Name="mAnnotEmpty" Width="100px"/>
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Label="About..."/>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
+            <RelativePanel x:Name="mAttachmentPanel" Visibility="Collapsed" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" Height="300" RelativePanel.AlignRightWithPanel="True" Margin="80" Width="500" Background="#DD333333">
+                <TextBlock x:Name="mAddAttachment" Text="+New Attachment" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" Tapped="mAddAttachment_Tapped" Foreground="#FFDDDDDD" FontSize="22" Margin="20"/>
+                <ListView
+                x:Name="mAttachmentView" 
+                Margin="20"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="mAddAttachment"
+                RelativePanel.AlignBottomWithPanel="True"
+                IsItemClickEnabled="False"
+                ItemsSource="{x:Bind mAttachmentsList, Mode=OneWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:AttachmentItem">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{x:Bind ESName}" Tag="{x:Bind index}" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" IsColorFontEnabled="True" Foreground="#FFDDDDDD" Tapped="mAttachmentView_ItemClick"/>
+                                <Image Source="/Assets/imgs/annot_delete.png" Tag="{x:Bind index}" Tapped="Delete_ES_Tapped" Height="30" Width="30" Grid.Column="1" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </RelativePanel>
+            <RelativePanel x:Name="mThumb" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Height="160"></RelativePanel>
+            <local:PDFPagesView x:Name="mPages" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Visibility="Collapsed"/>
+        </RelativePanel>
+
+        <SplitView.Pane>
+            <Pivot x:Name="mPivot" IsTabStop="true">
+                <PivotItem Header="Search" x:Name="SearchPivotItem" IsEnabled="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="SearchPrevBtn" Margin="0,5,5,5" 
+                                Click="OnSearchBtnClick" Grid.Row="0" HorizontalAlignment="Left" Grid.Column="0">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Back"/>
+                                <TextBlock Text="Previous" Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="SearchNextBtn" Margin="5" 
+                                Click="OnSearchBtnClick" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Forward"/>
+                                <TextBlock Text="Next" Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="CloseSearchBtn" 
+                                Click="OnSearchBtnClick" Margin="5,5,0,5" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Cancel"/>
+                                <TextBlock Text="Close" Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <ListView
+                            x:Name="FTSSearchResultList"
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            ItemTemplate="{StaticResource FTSSearchResultItemTemplate}"
+                            SelectionChanged="FTSSearchResultList_SelectionChanged"/>
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+        </SplitView.Pane>
+
+    </SplitView>
+</Page>

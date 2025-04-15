@@ -1,0 +1,52 @@
+﻿<ContentDialog
+    x:Class="RDPDFMaster.PDFReaderPage.DlgSignatureProp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RDPDFMaster.PDFReaderPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Signature Property"
+    PrimaryButtonText="Close"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Issue: " Grid.Row="0" Grid.Column="0"/>
+        <TextBlock x:Name="mIssueText" Grid.Row="0" Grid.Column="1"/>
+
+        <TextBlock Text="Subject: " Grid.Row="1" Grid.Column="0"/>
+        <TextBlock x:Name="mSubjectText" Grid.Row="1" Grid.Column="1"/>
+
+        <TextBlock Text="Version: " Grid.Row="2" Grid.Column="0"/>
+        <TextBlock x:Name="mVersionText" Grid.Row="2" Grid.Column="1"/>
+
+        <TextBlock Text="Resson: " Grid.Row="3" Grid.Column="0"/>
+        <TextBlock x:Name="mReasonText" Grid.Row="3" Grid.Column="1"/>
+
+        <TextBlock Text="Location: " Grid.Row="4" Grid.Column="0"/>
+        <TextBlock x:Name="mLocationText" Grid.Row="4" Grid.Column="1"/>
+
+        <TextBlock Text="Contack: " Grid.Row="5" Grid.Column="0"/>
+        <TextBlock x:Name="mContackText" Grid.Row="5" Grid.Column="1"/>
+
+        <TextBlock Text="Signature time: " Grid.Row="6" Grid.Column="0"/>
+        <TextBlock x:Name="mSignTimeText" Grid.Row="6" Grid.Column="1"/>
+
+        <TextBlock Text="Verify: " Grid.Row="7" Grid.Column="0"/>
+        <TextBlock x:Name="mVerifyText" Grid.Row="7" Grid.Column="1"/>
+    </Grid>
+</ContentDialog>

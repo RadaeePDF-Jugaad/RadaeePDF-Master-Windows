@@ -1,0 +1,46 @@
+﻿<ContentDialog
+    x:Class="RDPDFMaster.PDFReaderPage.DlgSignature"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Sign the Field"
+    PrimaryButtonText="OK"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="mImagePickerBtn" Grid.Row="0" Margin="5" Click="mImagePickerBtn_Click">
+            <TextBlock Text="Choose your signature image"/>
+        </Button>
+        <Image x:Name="mSignField" Grid.Row="1" Height="300" Width="500" Margin="5"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Cert file:" Margin="5"/>
+            <Button Grid.Column="1" x:Name="mBrowseBtn" Click="mBrowseBtn_Click" Margin="5">
+                <TextBlock Text="Browse"/>
+            </Button>
+            <TextBox x:Name="mPathInput" Grid.Column="2" Margin="5"/>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Password: " Margin="5"/>
+            <PasswordBox x:Name="mPasswordInput" Grid.Column="1" Margin="5" InputScope="Password"/>
+        </Grid>
+    </Grid>
+</ContentDialog>

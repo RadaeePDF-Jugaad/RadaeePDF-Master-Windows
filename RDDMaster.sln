@@ -66,4 +66,7 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C6EB886-774B-44A7-A97C-298B65D85B73}
 	EndGlobalSection
+	GlobalSection(StartupProject) = postSolution
+		StartupProject = {EAF9CF36-09DB-43E9-AE9E-45B794F7E811}
+	EndGlobalSection
 EndGlobal

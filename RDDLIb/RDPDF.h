@@ -589,7 +589,7 @@ namespace RDDLib
 			/**
 			 * encrypt document and save as the document to another file.<br/>
 			 * this method require premium license.
-			 * @param dst path to save£¬ same as path parameter of SaveAs.
+			 * @param dst path to saveï¿½ï¿½ same as path parameter of SaveAs.
 			 * @param User_pswd user password, can be null.
 			 * @param Owner_pswd owner password, can be null.
 			 * @param perm permission to set, same as GetPermission() method.<br/>
@@ -1313,8 +1313,8 @@ namespace RDDLib
 			 * @param phase phase value, mostly, it is 0.
 			 * @return true or false.
 			 * eaxmple:<br/>
-			 * [2, 1], 0  means 2 on, 1 off, 2 on, 1 off, ¡­<br/>
-			 * [2, 1], 0.5 means 1.5 on, 1 off, 2 on 1 off, ¡­<br/>
+			 * [2, 1], 0  means 2 on, 1 off, 2 on, 1 off, ï¿½ï¿½<br/>
+			 * [2, 1], 0.5 means 1.5 on, 1 off, 2 on 1 off, ï¿½ï¿½<br/>
 			 * for more details, plz see PDF-Reference 1.7 (4.3.2) Line Dash Pattern.<br/>
 			 */
 			void SetStrokeDash(const Array<float> ^dash, float phase)
@@ -2525,7 +2525,7 @@ namespace RDDLib
 			 * you should render page again to display modified data in viewer.<br/>
 			 * this can be invoked after ObjsStart or Render or RenderToBmp.<br/>
 			 * @param rect link area rect [left, top, right, bottom] in PDF coordinate.
-			 * @param uri url address, example: "http://www.radaee.com/en"
+			 * @param uri url address, example: "https://www.radaeepdf.com"
 			 * @return true or false.<br/>
 			 * the added annotation can be obtained by Page.GetAnnot(Page.GetAnnotCount() - 1), if this method return true.
 			 */
@@ -3032,7 +3032,7 @@ namespace RDDLib
 				int get(){return PDF_Page_getAnnotFieldType(m_page->m_page, m_annot);}
 			}
 			/**
-			 * get name of the annotation without NO. a fields group with same name "field#0","field#1"£¬got to "field".
+			 * get name of the annotation without NO. a fields group with same name "field#0","field#1"ï¿½ï¿½got to "field".
 			 * example: "EditBox1[0]".
 			 */
 			property String ^FieldName
@@ -3089,7 +3089,7 @@ namespace RDDLib
 			 * @param idx action index:<br/>
 			 *            0:'K' performed when the user types a keystroke<br/>
 			 *            1:'F' to be performed before the field is formatted to display its current value.<br/>
-			 *            2:'V' to be performed when the field¡¯s value is changed<br/>
+			 *            2:'V' to be performed when the fieldï¿½ï¿½s value is changed<br/>
 			 *            3:'C' to be performed to recalculate the value of this field when that of another field changes.<br/>
 			 * @return javsscript of field's action<br/>
 			 */
@@ -3625,7 +3625,7 @@ namespace RDDLib
 			 * @return type of item:<br/>
 			 * -1: unknown or error.<br/>
 			 * 0: Video.<br/>
-			 * 1£ºSound.<br/>
+			 * 1ï¿½ï¿½Sound.<br/>
 			 * 2:Flash file object.<br/>
 			 * 3:3D file object.<br/>
 			 */

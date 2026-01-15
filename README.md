@@ -25,8 +25,8 @@ Before running the demo, ensure you have the following installed:
 
 ### Visual Studio Requirements
 - **Visual Studio 2022** (or later) with the following workloads:
-  - **Sviluppo per desktop .NET** - For WPF, Windows Forms, and console applications with C#, Visual Basic, and F# with .NET Framework
-  - **Strumenti della piattaforma UWP (Universal Windows Platform) per C++** - Latest MSVC version (v143)
+  - **.NET desktop development** - For WPF, Windows Forms, and console applications with C#, Visual Basic, and F# with .NET Framework
+  - **Universal Windows Platform development** - With C++ (v143) tools for UWP
   
 ### Windows SDK
 - **Windows 11 SDK (10.0.22621.0)** or later

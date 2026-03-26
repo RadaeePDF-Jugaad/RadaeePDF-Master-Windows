@@ -222,7 +222,7 @@ namespace com.radaee.master
             load_data();
             //String sver = RDGlobal.GetVersion();//this versioin string, example "20220225".
             //the key is binding to package "com.radaee.reader", can active version before "20250518"
-            int ret = RDGlobal.ActiveLicense("6804C2339FB1E30E60E3D3E09F430347176D31744B4CA3BC1800AD7ECE827DD26395C6BD9C8AAEFC2D7633969C642CF0");
+            int ret = RDGlobal.ActiveLicense("755836CA098838C0986F3123ECCAB01F9E84778014E59DA080D972017D2E78BF317E448DEBED21A16608F2884E925C46");
             //init FTS manager
             RadaeeFTSManager.Init();
             return ret == 3;

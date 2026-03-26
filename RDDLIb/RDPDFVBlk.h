@@ -92,6 +92,18 @@ namespace RDDLib
 				}
 				m_doc = NULL;
 			}
+			static long long annot_callback(void* user, PDF_ANNOT annot)
+			{
+				CRDVBlk* thiz = (CRDVBlk*)user;
+				int type = PDF_Page_getAnnotType(thiz->m_page, annot);
+				if (type == 2) return 0x100000000L;//do not display link annoataion
+				if (type == 20)
+				{
+					int sta = PDF_Page_getAnnotCheckStatus(thiz->m_page, annot);
+					if (sta <= 0) return 0;//fully transparency.
+				}
+				return 0x200000ff;//blue transparency.
+			}
 			inline void bk_render()
 			{
 				if (m_status == -1) return;
@@ -106,6 +118,7 @@ namespace RDDLib
 				}
 				PDF_MATRIX mat = Matrix_createScale(m_scale, -m_scale, -m_x, m_ph - m_y);
 				PDF_Page_renderWithPGEditor(page, dib, mat, true, mode_best);
+				//PDF_Page_renderWithPGEditor1(page, dib, mat, annot_callback, this, mode_best);
 				Matrix_destroy(mat);
 
 				if (m_status != -1)

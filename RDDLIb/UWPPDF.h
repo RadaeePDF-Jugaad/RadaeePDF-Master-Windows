@@ -251,6 +251,7 @@ int PDF_Page_signAnnotField(PDF_PAGE page, PDF_ANNOT annot, PDF_DOC_FORM appeare
 	* 4: signature field<br/>
 	*/
 int PDF_Page_getAnnotFieldType( PDF_PAGE page, PDF_ANNOT annot );
+int PDF_Page_getAnnotFieldBtnLabelW(PDF_PAGE page, PDF_ANNOT annot, wchar_t* buf, int len);
 int PDF_Page_getAnnotFieldNameW( PDF_PAGE page, PDF_ANNOT annot, wchar_t *buf, int len );
 int PDF_Page_getAnnotFieldNameWithNOW(PDF_PAGE page, PDF_ANNOT annot, wchar_t *buf, int len);
 int PDF_Page_getAnnotFieldFullNameW( PDF_PAGE page, PDF_ANNOT annot, wchar_t *buf, int len );

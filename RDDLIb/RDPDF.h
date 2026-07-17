@@ -3060,6 +3060,15 @@ namespace RDDLib
 			{
 				int get(){return PDF_Page_getAnnotFieldType(m_page->m_page, m_annot);}
 			}
+			property String^ FieldBtnLabel
+			{
+				String^ get()
+				{
+					wchar_t tmp[512] = { 0 };
+					if (PDF_Page_getAnnotFieldBtnLabelW(m_page->m_page, m_annot, tmp, 511) <= 0) return nullptr;
+					else return ref new String(tmp);
+				}
+			}
 			/**
 			 * get name of the annotation without NO. a fields group with same name "field#0","field#1"£¬got to "field".
 			 * example: "EditBox1[0]".

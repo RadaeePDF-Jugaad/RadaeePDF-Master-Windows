@@ -398,6 +398,8 @@ bool PDF_Page_copyAnnot( PDF_PAGE page, PDF_ANNOT annot, const PDF_RECT *rect );
 bool PDF_Page_removeAnnot( PDF_PAGE page, PDF_ANNOT annot );
 
 bool PDF_Page_addFieldButton(PDF_PAGE page, const PDF_RECT* rect, String^ name, String^ label, PDF_DOC_FORM app);
+bool PDF_Page_addFieldButtonSubmit(PDF_PAGE page, const PDF_RECT* rect, String^ name, String^ label, String^ target, PDF_DOC_FORM app);
+bool PDF_Page_addFieldButtonReset(PDF_PAGE page, const PDF_RECT* rect, String^ name, String^ label, PDF_DOC_FORM app);
 bool PDF_Page_addFieldCheck(PDF_PAGE page, const PDF_RECT* rect, String^ name, String^ val, PDF_DOC_FORM app_on, PDF_DOC_FORM app_off);
 bool PDF_Page_addFieldRadio(PDF_PAGE page, const PDF_RECT* rect, String^ name, String^ val, PDF_DOC_FORM app_on, PDF_DOC_FORM app_off);
 bool PDF_Page_addFieldCombo(PDF_PAGE page, const PDF_RECT* rect, String^ name, const Array<String^>^ opts);

@@ -2845,6 +2845,14 @@ namespace RDDLib
 			{
 				return PDF_Page_cancelWithPGEditor(m_page);
 			}
+			Boolean AddFieldButtonSubmit(RDRect rect, String^ name, String^ label, String^ target, PDFDocForm^ app)
+			{
+				return PDF_Page_addFieldButtonSubmit(m_page, (const PDF_RECT*)&rect, name, label, target, (app) ? app->m_form : NULL);
+			}
+			Boolean AddFieldButtonReset(RDRect rect, String^ name, String^ label, String^ target, PDFDocForm^ app)
+			{
+				return PDF_Page_addFieldButtonReset(m_page, (const PDF_RECT*)&rect, name, label, (app) ? app->m_form : NULL);
+			}
 			/**
 			 * add a checkbox field.<br/>
 			 * this method require premium license.
